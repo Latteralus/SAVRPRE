@@ -47,6 +47,8 @@
             owner: "",
             notes: "Cozy starter spot near Legion.",
             images: [],
+            tbx: "No", // TBX: Yes or No
+            tbxCost: 0, // TBX cost per month in USD
           },
           {
             id: uid(),
@@ -63,6 +65,8 @@
             owner: "",
             notes: "Great value.",
             images: [],
+            tbx: "No", // TBX: Yes or No
+            tbxCost: 0, // TBX cost per month in USD
           },
           {
             id: uid(),
@@ -79,6 +83,8 @@
             owner: "John Doe",
             notes: "Company HQ.",
             images: [],
+            tbx: "No", // TBX: Yes or No
+            tbxCost: 0, // TBX cost per month in USD
           },
           {
             id: uid(),
@@ -95,6 +101,8 @@
             owner: "",
             notes: "Island shopfront.",
             images: [],
+            tbx: "No", // TBX: Yes or No
+            tbxCost: 0, // TBX cost per month in USD
           },
           {
             id: uid(),
@@ -111,6 +119,8 @@
             owner: "",
             notes: "Investment property.",
             images: [],
+            tbx: "No", // TBX: Yes or No
+            tbxCost: 0, // TBX cost per month in USD
           },
         ];
 
@@ -188,6 +198,8 @@
               owner: "",
               notes: "",
               images: [],
+              tbx: "No", // TBX: Yes or No
+              tbxCost: 0, // TBX cost per month in USD
             });
             setEditorOpen(true);
           }
@@ -387,6 +399,11 @@
                     <Badge color="amber">Mortgage: {currency(p.mortgageRemaining)}</Badge>
                   )}
                   <Badge>Storage: {p.storage > 0 ? p.storage : "N/A"}</Badge>
+                  
+                  {/* TBX Badge */}
+                  {p.tbx === "Yes" && p.tbxCost > 0 && (
+                    <Badge color="blue">TBX: {currency(p.tbxCost)}/mo</Badge>
+                  )}
                 </div>
 
                 {p.postalCode && (
@@ -626,6 +643,32 @@
                       />
                     </Field>
                   </div>
+                  
+                  {/* TBX Fields */}
+                  <Field label="TBX Included">
+                    <select
+                      value={draft.tbx}
+                      onChange={(e) => update("tbx", e.target.value)}
+                      className="px-3 py-2 rounded-xl border border-slate-300"
+                    >
+                      <option>No</option>
+                      <option>Yes</option>
+                    </select>
+                  </Field>
+                  
+                  {draft.tbx === "Yes" && (
+                    <Field label="TBX Cost per Month (USD)">
+                      <input
+                        type="number"
+                        value={draft.tbxCost}
+                        onChange={(e) => update("tbxCost", Number(e.target.value))}
+                        className="px-3 py-2 rounded-xl border border-slate-300"
+                        placeholder="0.00"
+                        min="0"
+                        step="0.01"
+                      />
+                    </Field>
+                  )}
                 </div>
 
                 <div className="p-4 border-t flex items-center justify-end gap-2">
