@@ -18,5 +18,22 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      // Simple test to check if Tailwind CSS is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Tailwind CSS test: If you see styled text below, Tailwind is working');
+        const testDiv = document.createElement('div');
+        testDiv.className = 'bg-blue-500 text-white p-4 text-center';
+        testDiv.textContent = 'Tailwind CSS is working!';
+        testDiv.style.position = 'fixed';
+        testDiv.style.top = '10px';
+        testDiv.style.right = '10px';
+        testDiv.style.zIndex = '9999';
+        document.body.appendChild(testDiv);
+        
+        // Remove after 3 seconds
+        setTimeout(() => testDiv.remove(), 3000);
+      });
+    </script>
   </body>
 </html>

@@ -5,11 +5,44 @@ import { currency } from '../utils';
 function PropertyCard({ p, admin, onEdit, onDelete, onUpdate }) {
   const inputRef = useRef(null);
 
-  function handleFile(e) {
+  async function handleFile(e) {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
-    const urls = files.map((f) => URL.createObjectURL(f));
-    onUpdate({ ...p, images: [...(p.images || []), ...urls] });
+
+    try {
+      const uploadedUrls = [];
+      
+      for (const file of files) {
+        const arrayBuffer = await file.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        
+        const response = await fetch('/api/images/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            filename: file.name,
+            contentType: file.type,
+            content: base64,
+          }),
+        });
+
+        if (response.ok) {
+          const { url } = await response.json();
+          uploadedUrls.push(url);
+        } else {
+          console.error('Failed to upload image:', file.name);
+        }
+      }
+
+      if (uploadedUrls.length > 0) {
+        onUpdate({ ...p, images: [...(p.images || []), ...uploadedUrls] });
+      }
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      alert('Failed to upload images. Please try again.');
+    }
   }
 
   return (
