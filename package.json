@@ -2,11 +2,11 @@
   "name": "savrp-real-estate",
   "version": "1.0.0",
   "description": "SAVRP Real Estate Property Management Dashboard",
-  "main": "home.html",
+  "main": "index.html",
   "scripts": {
-    "dev": "npx serve .",
-    "build": "echo 'No build process needed for static HTML'",
-    "start": "npx serve ."
+    "dev": "cd savrp-real-estate && npm start",
+    "build": "cd savrp-real-estate && npm run build",
+    "start": "cd savrp-real-estate && npm start"
   },
   "keywords": ["react", "real-estate", "property-management"],
   "author": "",
